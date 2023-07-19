@@ -165,61 +165,81 @@ class Pelicula{
    }
 
 
-// Variable para indicar si se realizó una compra exitosa
-let compraExitosa = false;
+  // Variable para indicar si se realizó una compra exitosa
+   let compraExitosa = false;
 
-// Función para agregar una película al carrito
-function agregarAlCarrito(pelicula) {
-  let carritoDiv = document.getElementById("carrito");
+   // Deshabilitar el botón de comprar al cargar la página
+   const comprarBtn = document.getElementById("comprarBtn");
+   if (comprarBtn) {
+   comprarBtn.disabled = true;
+   }
 
-  // Crear una nueva card para la película
-  let nuevaPeliculaDiv = document.createElement("div");
-  nuevaPeliculaDiv.className = "card";
-  nuevaPeliculaDiv.innerHTML = `
-    <img class="card-img-top" src="assets/${pelicula.imagen}" alt="${pelicula.titulo} de ${pelicula.director}">
-    <div class="card-body">
-      <h5 class="card-title">${pelicula.titulo}</h5>
-      <p class="card-text">Director: ${pelicula.director}</p>
-      <p class="card-text">Precio: ${pelicula.precio}</p>
-    </div>`;
+   // Función para agregar una película al carrito
+   function agregarAlCarrito(pelicula) {
+   let carritoDiv = document.getElementById("carrito");
 
-  carritoDiv.appendChild(nuevaPeliculaDiv);
-  carritoDiv.style.display = "block"; // Mostrar el carrito
+   // Crear una nueva card para la película
+   let nuevaPeliculaDiv = document.createElement("div");
+   nuevaPeliculaDiv.className = "card";
+   nuevaPeliculaDiv.innerHTML = `
+      <img class="card-img-top" src="assets/${pelicula.imagen}" alt="${pelicula.titulo} de ${pelicula.director}">
+      <div class="card-body">
+         <h5 class="card-title">${pelicula.titulo}</h5>
+         <p class="card-text">Director: ${pelicula.director}</p>
+         <p class="card-text">Precio: ${pelicula.precio}</p>
+      </div>`;
 
-  // Habilitar el botón de comprar nuevamente
-  comprarBtn.disabled = false;
-}
+   carritoDiv.appendChild(nuevaPeliculaDiv);
+   carritoDiv.style.display = "block"; // Mostrar el carrito
 
-// Evento que se ejecuta cuando el botón de comprar es clickeado
-const comprarBtn = document.getElementById("comprarBtn");
-if (comprarBtn) {
-  comprarBtn.addEventListener("click", () => {
-    // Mostrar el mensaje de compra exitosa
-    alert("Compra exitosa");
+   // Habilitar el botón de comprar cuando se agrega una película al carrito
+   comprarBtn.disabled = false;
+   }
 
-    // Deshabilitar el botón de comprar después de la compra exitosa
-    comprarBtn.disabled = true;
-    compraExitosa = true;
+   // Evento que se ejecuta cuando el botón de comprar es clickeado
+   if (comprarBtn) {
+   comprarBtn.addEventListener("click", () => {
+      // Verificar si el carrito está vacío antes de realizar la compra
+      let carritoDiv = document.getElementById("carrito");
+      if (carritoDiv.innerHTML.trim() === '') {
+         // Mostrar alerta de carrito vacío utilizando SweetAlert2
+         Swal.fire({
+         icon: 'error',
+         title: 'Carrito vacío',
+         text: 'Agrega películas al carrito antes de comprar.',
+         });
+         return; // Detener la compra si el carrito está vacío
+      }
 
-    // Ocultar y vaciar el carrito
-    let carritoDiv = document.getElementById("carrito");
-    carritoDiv.style.display = "none";
-    carritoDiv.innerHTML = '';
-  });
-}
+   // Mostrar el mensaje de compra exitosa
+      Swal.fire({
+         icon: 'success',
+         title: 'Compra exitosa',
+         text: '¡Gracias por tu compra!',
+      });
 
-// Evento que se ejecuta cuando el botón de cancelar compra es clickeado
-const cancelarCompraBtn = document.getElementById("cancelarCompraBtn");
-if (cancelarCompraBtn) {
-  cancelarCompraBtn.addEventListener("click", () => {
-    // Deshabilitar el botón de comprar solo si no se realizó una compra exitosa
-    if (!compraExitosa) {
+   // Deshabilitar el botón de comprar después de la compra exitosa
       comprarBtn.disabled = true;
-    }
+      compraExitosa = true;
 
-    // Vaciar y ocultar el carrito
-    let carritoDiv = document.getElementById("carrito");
-    carritoDiv.innerHTML = '';
-    carritoDiv.style.display = "none";
-  });
-}
+   // Ocultar y vaciar el carrito
+      carritoDiv.style.display = "none";
+      carritoDiv.innerHTML = '';
+   });
+   }
+
+   // Evento que se ejecuta cuando el botón de cancelar compra es clickeado
+      const cancelarCompraBtn = document.getElementById("cancelarCompraBtn");
+      if (cancelarCompraBtn) {
+      cancelarCompraBtn.addEventListener("click", () => {
+         // Deshabilitar el botón de comprar solo si no se realizó una compra exitosa
+         if (!compraExitosa) {
+            comprarBtn.disabled = true;
+         }
+
+      // Vaciar y ocultar el carrito
+         let carritoDiv = document.getElementById("carrito");
+         carritoDiv.innerHTML = '';
+         carritoDiv.style.display = "none";
+      });
+      }
