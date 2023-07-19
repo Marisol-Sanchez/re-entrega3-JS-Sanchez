@@ -1,0 +1,23 @@
+*{
+    margin: 0;
+    border: 0;
+    box-sizing: border-box;
+}
+
+.txt-align{
+    text-align: center;
+}
+
+.bC{
+    background-color: black;
+    color: white;
+}
+
+.pad{
+    padding: 15px;
+
+}
+
+.padCero{
+    padding: 0%;
+}
