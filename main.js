@@ -39,21 +39,13 @@ class Pelicula{
 
 
    //CREAR UN ARRAY DE OBJETOS
-   // const cartelera = []
-   // cartelera.push(pelicula1, pelicula2, pelicula3, pelicula4, pelicula5, pelicula6, pelicula7, pelicula8, pelicula9, pelicula10,
-   //    pelicula11, pelicula12)
-
-   //CREAR UN ARRAY DE OBJETOS
    let cartelera = [] 
-   //ver si LA KEY en el storage "estanteria" y evaluar si debo crear el array en el storage o capturalo
    
    if(localStorage.getItem("cartelera")){
-      //si existe la key estanteria en el storage, va a entrar aca
-      console.log("Ya existe la key estanteria")
-      //cuando no es la primera vez, me traigo lo de storage
+      console.log("Ya existe la key cartelera")
       cartelera = JSON.parse(localStorage.getItem("cartelera"))
    }else{
-      console.log(`ENTRA POR PRIMERA VEZ. SETEAMOS ARRAY`)
+      console.log(`bienvenido`)
       cartelera.push(pelicula1, pelicula2, pelicula3, pelicula4, pelicula5, pelicula6, pelicula7, pelicula8, pelicula9, pelicula10,
       pelicula11, pelicula12)
       localStorage.setItem("cartelera", JSON.stringify(cartelera))
