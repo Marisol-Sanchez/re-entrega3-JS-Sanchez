@@ -29,13 +29,13 @@
             </button>
         
             <div class="collapse navbar-collapse" id="navbarColor01">
-              <ul class="navbar-nav me-auto">
+              
+              <!-- <ul class="navbar-nav me-auto">
                 <form class="d-flex">
                   <input id="buscador"class="form-control me-2" placeholder="" aria-label="Search">
                   <button id="btnBuscar" class="btn btn-outline-success">Buscar</button>
                 </form> 
-                
-              </ul>
+              </ul> -->
 
               <ul>
                 <select id="selectOrden" class="form-select form-select-sm" aria-label=".form-select-sm example">
@@ -75,33 +75,30 @@
         <div id="peliculas" class="row"></div>
       </div>
 
+
+ 
+
       
     <!-- FORM AGREGAR PELICULA -->
     <div class="row justify-content-center">
-
-      <form id="formAgregarPelicula" class="col-lg-3 m-5"> 
-      <form id="formAgregarPelicula" class="col-xl-12 col-12">
-        <p> Si no encontras la pelicula que querés ver, recomendanosla! </p>
+      <form id="formAgregarPelicula" class="col-lg-3 m-5">
+        <p>Si no encuentras la película que quieres ver, ¡recomiéndanosla!</p>
         <div class="mb-3">
-          <label for="titulo" class="form-label">Titulo</label>
+          <label for="titulo" class="form-label">Título</label>
           <input type="text" class="form-control" id="tituloInput" aria-describedby="titulo">
-          
         </div>
         <div class="mb-3">
           <label for="director" class="form-label">Director</label>
-          <input type="text" class="form-control" id="autorInput" aria-describedby="director">
-          
+          <input type="text" class="form-control" id="directorInput" aria-describedby="director">
         </div>
         <div class="mb-3">
-          <label for="precio" class="form-label">Precio:</label>
-          <input type="number" class="form-control" id="precioInput" aria-describedby="precio">
-          
+          <label for="director" class="form-label">Precio</label>
+          <input type="text" class="form-control" id="precioInput" aria-describedby="precio">
         </div>
         <div>
-            <button type="text" id="agregarPeliBtn" class="btn btn-success" >Sugerir película</button>
+          <button type="button" id="agregarPeliBtn" class="btn btn-success">Sugerir película</button>
         </div>
       </form>
-
     </div>
 
 
@@ -133,6 +130,8 @@
           </div>
         </div>
       </div>
+
+    
 
 
     

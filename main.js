@@ -38,16 +38,32 @@ class Pelicula{
 
 
 
- //CREAR UN ARRAY DE OBJETOS
- const cartelera = []
- cartelera.push(pelicula1, pelicula2, pelicula3, pelicula4, pelicula5, pelicula6, pelicula7, pelicula8, pelicula9, pelicula10,
-   pelicula11, pelicula12)
+   //CREAR UN ARRAY DE OBJETOS
+   // const cartelera = []
+   // cartelera.push(pelicula1, pelicula2, pelicula3, pelicula4, pelicula5, pelicula6, pelicula7, pelicula8, pelicula9, pelicula10,
+   //    pelicula11, pelicula12)
+
+   //CREAR UN ARRAY DE OBJETOS
+   let cartelera = [] 
+   //ver si LA KEY en el storage "estanteria" y evaluar si debo crear el array en el storage o capturalo
+   
+   if(localStorage.getItem("cartelera")){
+      //si existe la key estanteria en el storage, va a entrar aca
+      console.log("Ya existe la key estanteria")
+      //cuando no es la primera vez, me traigo lo de storage
+      cartelera = JSON.parse(localStorage.getItem("cartelera"))
+   }else{
+      console.log(`ENTRA POR PRIMERA VEZ. SETEAMOS ARRAY`)
+      cartelera.push(pelicula1, pelicula2, pelicula3, pelicula4, pelicula5, pelicula6, pelicula7, pelicula8, pelicula9, pelicula10,
+      pelicula11, pelicula12)
+      localStorage.setItem("cartelera", JSON.stringify(cartelera))
+   }
 
 
  //DOM CON ARRAY DE OBJETOS
  let peliculasDiv = document.getElementById("peliculas")
  
- //recorrer estanteria para imprimir TOOODOS los elementos de mi array
+ //recorrer cartelera para imprimir los elementos de mi array
  function mostrarCartelera(array){
     //resetear el DOM
     peliculasDiv.innerHTML = ``
@@ -65,6 +81,7 @@ class Pelicula{
                                   <button id="agregarBtn${pelicula.id}" class="btn btn-outline-success">Agregar al carrito</button>
                                   </div>
                                </div>`
+
       peliculasDiv.appendChild(nuevaPeliculaDiv)
  
       let agregarBtn = document.getElementById(`agregarBtn${pelicula.id}`)
@@ -74,14 +91,18 @@ class Pelicula{
       console.log(`La pelicula ${pelicula.titulo} fue agregado al carrito`)
       agregarAlCarrito(pelicula);//nuevo
 
-  
-
-
-
     })
  
    }
    }
+
+
+
+
+
+
+
+   
    mostrarCartelera(cartelera)   
  
  
@@ -138,31 +159,58 @@ class Pelicula{
    }
   
  
-   let agregarPeliBtn = document.getElementById("agregarPeliBtn")
-   
-   agregarPeliBtn.addEventListener("click", function(event){
-
-      event.preventDefault()
-      
-      agregarPelicula(cartelera)
-   })
 
 
-  function agregarPelicula(array){
-    let formAgregarPelicula = document.getElementById("formAgregarPelicula")
-    console.log(formAgregarPelicula[0])
-    console.log(formAgregarPelicula[1])
-    console.log(formAgregarPelicula[2])
-   
-    const peliNueva = new Pelicula(array.length+1,formAgregarPelicula[1].value, formAgregarPelicula[0].value, parseInt(formAgregarPelicula[2].value), "cine.jpg")
-    console.log(peliNueva)
+
+
+// Evento que se ejecuta al hacer clic en el botón "Agregar Película"
+const agregarPeliBtn = document.getElementById("agregarPeliBtn");
+agregarPeliBtn.addEventListener("click", function (event) {
+  event.preventDefault();
+  agregarPelicula(cartelera);
+});
+
+// Función para agregar una película al catálogo
+function agregarPelicula(array) {
+  let formAgregarPelicula = document.getElementById("formAgregarPelicula");
+
+  const titulo = formAgregarPelicula[0].value;
+  const director = formAgregarPelicula[1].value;
+  const precio = parseInt(formAgregarPelicula[2].value);
+
+  // Validar que todos los campos del formulario estén completos
+  if (titulo.trim() === "" || director.trim() === "" || isNaN(precio) || precio <= 0) {
+    // Mostrar una alerta de SweetAlert2 indicando que todos los campos son obligatorios
+    Swal.fire({
+      icon: "error",
+      title: "Error",
+      text: "Todos los campos son obligatorios y el precio debe ser un número mayor a cero.",
+    });
+    return; // Detener la ejecución si hay campos vacíos o el precio no es válido
+  }
+
+  const peliNueva = new Pelicula(array.length + 1, titulo, director, precio, "cine.jpg");
+  array.push(peliNueva);
+  mostrarCartelera(array);
+
+  // Mostrar una alerta de SweetAlert2 indicando que la película fue agregada exitosamente
+  Swal.fire({
+    icon: "success",
+    title: "¡Película Agregada!",
+    text: "La película ha sido agregada exitosamente a la cartelera.",
+  });
+
+  formAgregarPelicula.reset();
+  // Guardar la cartelera actualizada en el LocalStorage
+  localStorage.setItem("cartelera", JSON.stringify(array));
+}
+
  
-    array.push(peliNueva)
-    mostrarCartelera(array)
- 
-    formAgregarPelicula.reset()
-    
-   }
+
+
+
+
+
 
 
   // Variable para indicar si se realizó una compra exitosa
